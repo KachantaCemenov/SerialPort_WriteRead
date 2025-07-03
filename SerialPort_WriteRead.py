@@ -1,14 +1,26 @@
 import serial
 import datetime
-SERIAL_PORT = 'COM7'  
-BAUD_RATE = 115200     
-file_name = 'serial_output.txt'
 
-ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
+
+
+com_number = input("Enter COM port number (e.g., COM7): ")
+
+SERIAL_PORT = 'COM' + com_number    
+
+baud = input("Enter baud rate: ")
+
+BAUD_RATE = baud
+
+file_name = 'ROOF0703_receiveLORA.txt'
+
+
 
 try:
+    ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
+
     with open(file_name, 'a') as file:
         print(f"Reading from {SERIAL_PORT} and writing to {file_name}")
+        file.write("dataTag,Middle,Side,Top,Horizontal,Vertical,Pressure (mBar),Temperature (K),Altitude (m), Average Roll, Max Roll, Average Pitch, Max Pitch\n")
         
         while True:
         # Read line from serial port
