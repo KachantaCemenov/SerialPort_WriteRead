@@ -3,17 +3,12 @@ import datetime
 
 
 
-com_number = input("Enter COM port number (e.g., COM7): ")
-
-SERIAL_PORT = 'COM' + com_number    
-
-baud = input("Enter baud rate: ")
-
-BAUD_RATE = baud
-
-file_name = 'ROOF0703_receiveLORA.txt'
+SERIAL_PORT = 'COM' + input("Enter COM port number (e.g., COM7): ")
 
 
+BAUD_RATE = input("Enter baud rate: ")
+
+file_name = input("Save into (exclude '.txt'): ") + ".txt"
 
 try:
     ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
