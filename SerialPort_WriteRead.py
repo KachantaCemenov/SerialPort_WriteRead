@@ -20,13 +20,17 @@ try:
         while True:
         # Read line from serial port
             if ser.in_waiting > 0:
-                data = ser.readline().decode('utf-8').strip()
+                # Get time
+                timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                try:
+                    data = ser.readline().decode('utf-8').strip()
+                except UnicodeDecodeError as uni_e:
+                    print(f"\n{timestamp} | Error - NOT wrote to SD: {uni_e}")
+                    continue
                 data = data[1:-1]  #Cut the brackets at both ends because it was sent in C-strings
                 if data:
-                    # Get time
-                    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     # put time before the data
-                    output = f"{timestamp}, {data}"
+                    output = f"{timestamp} | {data}"
                     # Write file
                     file.write(output+"\n")
                     file.flush()  
